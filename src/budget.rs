@@ -68,7 +68,9 @@ impl Budget {
         while current_money > 0f64 && size > 0 {
             let minimum = BudgetPrinciple::get_min(&principles);
 
-            if current_money / (principles.len() as f64) >= minimum {
+            let divided_money = current_money / (principles.len() as f64);
+
+            if divided_money >= minimum {
                 let mut_iterator: &mut [BudgetPrinciple] = principles.borrow_mut();
                 for x in mut_iterator {
                     if !x.is_full() {
@@ -83,7 +85,7 @@ impl Budget {
                 let mut_iterator: &mut [BudgetPrinciple] = principles.borrow_mut();
                 for x in mut_iterator {
                     if !x.is_full() {
-                        x.add_value(minimum);
+                        x.add_value(divided_money);
                     }
                 }
                 current_money = 0f64;
